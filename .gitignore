@@ -1,0 +1,159 @@
+###############################
+# .NET / Visual Studio
+###############################
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## VS Code
+.vscode/
+.history/
+.idea/
+
+## Rider
+.idea/
+*.sln.iml
+
+## ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+.nuget/
+project.lock.json
+artifacts/
+*.cache
+*.bak
+
+## Publish output
+wwwroot/dist/
+publish/
+out/
+node_modules/
+dist/
+tmp/
+temp/
+
+## Others
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+*.vs/
+.vs/
+*.dbmdl
+*.jfm
+*.pdb
+*.opendb
+*.cache/
+*.bak
+*.config.backup
+
+## Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+
+###############################
+# AI / Python / Jupyter
+###############################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.egg-info/
+.eggs/
+*.ipynb_checkpoints/
+.ipynb_checkpoints
+.env
+.venv/
+venv/
+ENV/
+env/
+*.log
+*.ckpt
+*.onnx
+*.pth
+*.pt
+*.h5
+*.tflite
+*.bin
+.cache/
+datasets/
+data/
+model_output/
+logs/
+runs/
+output/
+checkpoints/
+
+###############################
+# Angular / Node
+###############################
+# dependencies
+node_modules/
+bower_components/
+
+# Angular build outputs
+dist/
+tmp/
+temp/
+coverage/
+.angular/
+.angular/cache/
+.angular/local/
+.angular/server/
+.angular/browser/
+.angular/universal/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Misc
+.DS_Store
+Thumbs.db
+*.iml
+
+# Environment
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+###############################
+# Docker / Compose
+###############################
+docker-compose.override.yml
+docker-compose.local.yml
+*.pid
+*.seed
+*.tar
+*.gz
+
+###############################
+# Logs / Secrets
+###############################
+*.log
+logs/
+secret.*
+secrets.json
+appsettings.*.local.json
+.env.*
+__pycache__/
