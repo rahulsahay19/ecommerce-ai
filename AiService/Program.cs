@@ -1,41 +1,85 @@
+using AiService.Endpoints;
+using AiService.Providers;
+using AiService.Repositories;
+using AiService.Services;
+using Npgsql;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//Enable Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+            policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
+});
 
+var cfg = builder.Configuration;
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//PostGresSQL + Vector
+
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(cfg.GetConnectionString("PgVector"));
+dataSourceBuilder.UseVector();
+var dataSource = dataSourceBuilder.Build();
+builder.Services.AddSingleton(dataSource);
+builder.Services.AddSingleton<IPgVectorRepository, PgVectorRepository>();
+
+//Embedding + Chat Provider
+var provider = cfg["EmbeddingProvider"]?.ToLowerInvariant() ?? "Ollama";
+
+//TODO: Once we have other providers
+//switch(provider)
+//{
+
+//}
+
+//Embeddings
+builder.Services.AddHttpClient<IEmbeddingProvider, OllamaEmbeddingProvider>(client =>
+{
+    client.BaseAddress = new Uri(cfg["Ollama:BaseUrl"] ?? "http://localhost:11434/");
+    client.Timeout = TimeSpan.FromMinutes(5);
+});
+//Chat 
+builder.Services.AddHttpClient<IChatProvider, OllamaChatProvider>(client =>
+{
+    client.BaseAddress = new Uri(cfg["Ollama:BaseUrl"] ?? "http://localhost:11434/");
+    client.Timeout = TimeSpan.FromMinutes(5);
+});
+
+//Web Search Provider
+builder.Services.AddSingleton<IWebSearchProvider, WebSearchProvider>();
+
+//Chat Service
+builder.Services.AddScoped<IChatService, ChatService>();
+
+//Http Client Factory
+builder.Services.AddHttpClient("CatalogApi", client =>
+{
+    client.BaseAddress = new Uri(cfg["OcelotGateway:BaseUrl"] ?? "http://localhost:8010");
+});
+
+//Build app
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//Enable swagger
+if (app.Environment.IsDevelopment()) 
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+//EndPoints
+app.MapEmbeddingTest();
+app.MapChat();
+app.MapSemanticData();
+app.MapSemanticSearch();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapGet("/healthz", () => Results.Ok("Ok"));
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
