@@ -1,0 +1,59 @@
+<nav class="navbar">
+  <!-- Left: Logo + Departments -->
+  <div class="navbar__left">
+    <a [routerLink]="['/']" class="navbar__logo">🛒 Amazing</a>
+    <button [routerLink]="['/store']" class="navbar__departments">☰ Store</button>
+  </div>
+
+  <!-- Center: Search -->
+  <div class="navbar__center">
+    <select class="navbar__category">
+      <option>All</option>
+      <option>Shoes</option>
+      <option>Rackets</option>
+      <option>Football</option>
+      <option>option>Kit Bags</option>
+    </select>
+    <input class="navbar__search"
+           type="text"
+           [(ngModel)]="searchText"
+           placeholder="Search for products, brands and more..."
+           (keyup.enter)="onSearch()" />
+    <button class="navbar__search-btn" (click)="onSearch()">🔍</button>
+  </div>
+
+  <!-- Right: Account/Login + Cart -->
+  <div class="navbar__right">
+
+    <!-- 👇 Show when logged in -->
+    @if (loggedIn) {
+      <a routerLink="/store/orders" class="navbar__link">
+        Hello, {{ userName }}<br /><span>Account & Orders</span>
+      </a>
+      <button class="navbar__link navbar__logout" (click)="logout()">Logout</button>
+    } @else {
+      <a routerLink="/auth/login" class="navbar__link">
+        Hello, Sign in<br /><span>Account & Orders</span>
+      </a>
+      <a routerLink="/auth/register" class="navbar__link">Register</a>
+    }
+
+    <!-- 👇 Show when logged out -->
+    <ng-template #loggedOut>
+      <a routerLink="/auth/login" class="navbar__link">
+        Hello, Sign in<br /><span>Account & Orders</span>
+      </a>
+      <a routerLink="/auth/register" class="navbar__link">Register</a>
+    </ng-template>
+
+    <!-- Cart -->
+    <a routerLink="/store/basket" class="navbar__link navbar__cart"
+       title="You have {{ cartCount }} items in your cart">
+      <span class="cart-icon">🛒</span>
+      <span>Cart</span>
+      @if (cartCount > 0) {
+        <span class="navbar__cart-badge">{{ cartCount }}</span>
+      }
+    </a>
+  </div>
+</nav>
