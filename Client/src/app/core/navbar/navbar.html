@@ -14,6 +14,13 @@
       <option>Football</option>
       <option>option>Kit Bags</option>
     </select>
+    <!-- Search Mode Selector -->
+    <select class="navbar__mode" [(ngModel)]="searchMode">
+      <option value="catalog">Catalog</option>
+      <option value="semantic">Semantic</option>
+      <option value="hybrid">Hybrid</option>
+    </select>
+    
     <input class="navbar__search"
            type="text"
            [(ngModel)]="searchText"

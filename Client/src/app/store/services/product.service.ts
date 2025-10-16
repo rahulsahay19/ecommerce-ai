@@ -12,6 +12,8 @@ export class ProductService {
 
   // Gateway Url
   private baseUrl = 'http://localhost:8010/Catalog';
+  //AI Service
+  private aiUrl = 'https://localhost:7138';
 
   getAllProducts(
     page: number,
@@ -40,5 +42,18 @@ export class ProductService {
 
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.baseUrl}/${id}`);
+  }
+
+  searchSemantic(query: string, topK: number = 10): Observable<Product[]>{
+    return this.http.post<Product[]>(`${this.aiUrl}/search/vector`, {
+      query,
+      topK
+    });
+  }
+  searchHybrid(query: string, topK: number = 10): Observable<Product[]>{
+    return this.http.post<Product[]>(`${this.aiUrl}/search/hybrid`, {
+      query,
+      topK
+    }); 
   }
 }

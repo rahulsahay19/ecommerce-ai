@@ -26,6 +26,7 @@ export class Store implements OnInit {
   brands = signal<Brand[]>([]);
   types = signal<Type[]>([]);
   searchTerm = signal<string>('');
+  searchMode = signal<string>('catalog');
 
   // Filters (store IDs instead of names)
   selectedBrandId = signal<string | null>(null);
@@ -45,23 +46,57 @@ export class Store implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.searchTerm.set(params['search'] || '');
       this.selectedTypeId.set(params['typeId'] || null);
+      this.searchMode.set(params['mode'] || 'catalog'); //semantic/hybrid/catalog
       this.currentPage.set(1); // reset pagination on new search
       this.loadProducts();
     });
   }
 
   loadProducts() {
-    this.productService.getAllProducts(
-      this.currentPage(),
-      this.pageSize,
-      this.selectedBrandId(),   
-      this.selectedTypeId(),    
-      this.sortOption(),
-      this.searchTerm()
-    ).subscribe((res) => {
-      this.products.set(res.data);
-      this.totalCount.set(res.count);
-    });
+    const query = this.searchTerm();
+    if (!query || this.searchMode() === 'catalog') {
+      this.productService
+        .getAllProducts(
+          this.currentPage(),
+          this.pageSize,
+          this.selectedBrandId(),
+          this.selectedTypeId(),
+          this.sortOption(),
+          query,
+        )
+        .subscribe((res) => {
+          this.products.set(res.data);
+          this.totalCount.set(res.count);
+        });
+    } else if(this.searchMode() === 'semantic'){
+      //semantic search
+      this.productService.searchSemantic(query).subscribe((res)=>{
+        let filtered = res;
+
+        if(this.selectedBrandId()){
+          filtered = filtered.filter(p => p.brand.id === this.selectedBrandId());
+        }
+        if(this.selectedTypeId()){
+          filtered = filtered.filter(p => p.type.id === this.selectedTypeId());
+        }
+        this.products.set(filtered);
+        this.totalCount.set(filtered.length);
+      });
+    } else if(this.searchMode() === 'hybrid'){
+      //hybrid search
+      this.productService.searchHybrid(query).subscribe((res)=>{
+        let filtered = res;
+
+        if(this.selectedBrandId()){
+          filtered = filtered.filter(p => p.brand.id === this.selectedBrandId());
+        }
+        if(this.selectedTypeId()){
+          filtered = filtered.filter(p => p.type.id === this.selectedTypeId());
+        }
+        this.products.set(filtered);
+        this.totalCount.set(filtered.length);
+      });
+    }
   }
 
   loadBrands() {
@@ -75,7 +110,7 @@ export class Store implements OnInit {
   // Apply filters
   applyFilters() {
     this.currentPage.set(1); // reset pagination
-    this.loadProducts();     // backend does filtering
+    this.loadProducts(); // backend does filtering
   }
 
   // Add to Cart

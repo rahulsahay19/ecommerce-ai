@@ -14,6 +14,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class Navbar implements OnInit {
   searchText = '';
+  searchMode = 'catalog' // default search mode
   private basketService = inject(BasketService);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -29,7 +30,11 @@ export class Navbar implements OnInit {
   onSearch() {
     const term = this.searchText.trim();
     if(term) {
-      this.router.navigate(['/store'], {queryParams:{search: term}});
+      this.router.navigate([],{
+        relativeTo: this.router.routerState.root,
+        queryParams: {search: term, mode: this.searchMode},
+        queryParamsHandling: 'merge'
+      });
     } else {
       this.router.navigate(['/store']); //reset to full catalog
     }

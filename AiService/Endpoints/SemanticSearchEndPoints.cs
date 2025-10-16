@@ -16,7 +16,7 @@ namespace AiService.Endpoints
                 CancellationToken ct) =>
             {
                 var queryVector = await embeddins.EmbedAsync(req.query, ct);
-                var results = await repo.SearchByVectorAsync(queryVector, req.TopK ?? 5);
+                var results = await repo.SearchByVectorAsync(queryVector, req.TopK ?? 10);
                 return Results.Ok(results);
             });
             //Keyword search
@@ -24,7 +24,7 @@ namespace AiService.Endpoints
                 [FromServices] IPgVectorRepository repo,
                 QueryReq req) =>
             {
-                var results = await repo.SearchByKeywordAsync(req.query, req.TopK ?? 5);
+                var results = await repo.SearchByKeywordAsync(req.query, req.TopK ?? 10);
                 return Results.Ok(results);
             });
             //Hybrid search
@@ -35,7 +35,7 @@ namespace AiService.Endpoints
                 CancellationToken ct) =>
             {
                 var queryVector = await embeddins.EmbedAsync(req.query, ct);
-                var results = await repo.SearchByHybridAsync(req.query, queryVector, req.TopK ?? 5);
+                var results = await repo.SearchByHybridAsync(req.query, queryVector, req.TopK ?? 10);
                 return Results.Ok(results);
             });
             return app;
