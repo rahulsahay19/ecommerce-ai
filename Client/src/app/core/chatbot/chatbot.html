@@ -1,0 +1,49 @@
+<!-- Floating Chat Button -->
+<button class="chat-btn" (click)="toggleChat()">💬</button>
+
+<!-- Chat Window -->
+@if (isOpen()) {
+  <div class="chat-window">
+    <div class="chat-header">
+      <span>🤖 Amazing Assistant</span>
+      <button class="close-btn" (click)="toggleChat()">✖</button>
+    </div>
+
+    <div class="chat-body">
+  @for (msg of messages(); track $index) {
+    <div [ngClass]="msg.role" class="message">
+      <div class="bubble">{{ msg.content }}</div>
+
+      <!-- If message has products, show them -->
+      @if (msg.products && msg.products.length > 0) {
+        <div class="product-list">
+          @for (p of msg.products; track p.id) {
+            <a class="product-card" [routerLink]="['/store/product', p.id]">
+              <img [src]="'assets/' + p.imageFile" alt="{{ p.name }}" />
+              <div class="title">{{ p.name }}</div>
+              <div class="price">₹{{ p.price }}</div>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  @if (isTyping()) {
+    <div class="typing">Amazing Assistant is typing...</div>
+  }
+</div>
+
+
+    <div class="chat-footer">
+      <input
+        [value]="userInput()"
+        (input)="onInput($event)"
+        (keyup.enter)="sendMessage()"
+        placeholder="Type your message..."
+      />
+
+      <button (click)="sendMessage()">➤</button>
+    </div>
+  </div>
+}

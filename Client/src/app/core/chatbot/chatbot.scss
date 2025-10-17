@@ -1,0 +1,164 @@
+/* Floating Button */
+.chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff9900; // Amazon-like yellow
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.chat-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Chat Window */
+.chat-window {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  max-height: 500px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Amazon Ember', Arial, sans-serif;
+}
+
+/* Header */
+.chat-header {
+  background: #232f3e; // Amazon dark blue
+  color: #fff;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Body */
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background: #f6f6f6;
+}
+.message {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.message.user {
+  align-items: flex-end;
+}
+.message.bot {
+  align-items: flex-start;
+}
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 20px;
+  line-height: 1.4;
+  font-size: 14px;
+}
+.user .bubble {
+  background: #e3e3e3;
+  color: #000;
+}
+.bot .bubble {
+  background: #ffebc0; // Amazon-style light yellow
+  color: #111;
+}
+.typing {
+  font-size: 12px;
+  font-style: italic;
+  color: #555;
+}
+
+/* Footer */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #fafafa;
+}
+.chat-footer input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+}
+.chat-footer button {
+  margin-left: 10px;
+  background: #ff9900;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+.chat-footer button:hover {
+  background: #e68a00;
+}
+
+/* --- Product Cards inside Chat --- */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.product-card {
+  flex: 1 1 calc(50% - 10px);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.product-card .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.product-card .price {
+  font-size: 13px;
+  color: #e67a00;
+  font-weight: bold;
+}
+
+
