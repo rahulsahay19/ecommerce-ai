@@ -166,9 +166,20 @@ Client Side
 Phase 2: Intelligent Assistant & Web Integration 🔮
 
 In the next phase, we’ll take this foundation further with:
+
 🎙️ Voice Assistant integration (Speech ↔ Text ↔ Speech)
+
 🌐 Web Search fallback (using Bing / Google API)
+
 🧠 Contextual memory and personalized recommendations
+
 💬 Multi-turn conversational flows and smart ranking
 
 Stay tuned — the goal is to make your app behave like a real AI shopping assistant!
+
+MIT License
+Copyright (c) 2025 Rahul Sahay
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
