@@ -47,8 +47,8 @@ You’ll learn to orchestrate the complete AI search lifecycle:
 
 | Category | Technology |
 |-----------|-------------|
-| **Frontend** | Angular 17 + Signals, TypeScript, Tailwind CSS |
-| **Backend** | .NET 8 Microservices (CQRS style) |
+| **Frontend** | Angular 20 + Signals, TypeScript, SCSS |
+| **Backend** | .NET 9 Microservices (CQRS style) |
 | **Database** | PostgreSQL + pgvector extension |
 | **AI Models** | Ollama (Local LLM), Azure OpenAI (Cloud GPT-4 family) |
 | **Integration** | REST APIs (`/chat`, `/semantic/search`) |
