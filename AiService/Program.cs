@@ -92,8 +92,10 @@ switch (provider)
 //Web Search Provider
 builder.Services.AddSingleton<IWebSearchProvider, WebSearchProvider>();
 
-//Chat Service
+//Service
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IVoiceService, VoiceService>();
+
 
 //Http Client Factory
 builder.Services.AddHttpClient("CatalogApi", client =>
@@ -118,6 +120,7 @@ app.MapEmbeddingTest();
 app.MapChat();
 app.MapSemanticData();
 app.MapSemanticSearch();
+app.MapVoice();
 
 app.MapGet("/healthz", () => Results.Ok("Ok"));
 
