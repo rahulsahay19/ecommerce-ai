@@ -25,7 +25,7 @@ namespace AiService.Endpoints
 
                 //convert speech to text using Azure SDK (implemented inside Voice Service)
                 var text = await voiceService.TranscribeAsync(file, ct);
-                return Results.Ok(text);
+                return Results.Ok(new { text = text });
             });
 
             app.MapPost("/voice/tts", async (

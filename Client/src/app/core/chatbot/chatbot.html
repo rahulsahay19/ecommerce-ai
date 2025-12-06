@@ -1,49 +1,92 @@
 <!-- Floating Chat Button -->
-<button class="chat-btn" (click)="toggleChat()">💬</button>
+<button type="button" class="chat-btn" (click)="toggleChat()">💬</button>
 
 <!-- Chat Window -->
 @if (isOpen()) {
   <div class="chat-window">
+
+    <!-- Header -->
     <div class="chat-header">
       <span>🤖 Amazing Assistant</span>
-      <button class="close-btn" (click)="toggleChat()">✖</button>
+      <button type="button" class="close-btn" (click)="toggleChat()">✖</button>
     </div>
 
+    <!-- Body -->
     <div class="chat-body">
-  @for (msg of messages(); track $index) {
-    <div [ngClass]="msg.role" class="message">
-      <div class="bubble">{{ msg.content }}</div>
 
-      <!-- If message has products, show them -->
-      @if (msg.products && msg.products.length > 0) {
-        <div class="product-list">
-          @for (p of msg.products; track p.id) {
-            <a class="product-card" [routerLink]="['/store/product', p.id]">
-              <img [src]="'assets/' + p.imageFile" alt="{{ p.name }}" />
-              <div class="title">{{ p.name }}</div>
-              <div class="price">₹{{ p.price }}</div>
-            </a>
+      <!-- All Chat Messages -->
+      @for (msg of messages(); track $index) {
+        <div class="message" [ngClass]="msg.role">
+
+          <!-- Message Bubble -->
+          <div class="bubble">{{ msg.content }}</div>
+
+          <!-- Product Suggestions -->
+          @if (msg.products && msg.products.length > 0) {
+            <div class="product-list">
+              @for (p of msg.products; track p.id) {
+                <a class="product-card" [routerLink]="['/store/product', p.id]">
+                  <img [src]="'assets/' + p.imageFile" alt="{{ p.name }}" />
+                  <div class="title">{{ p.name }}</div>
+                  <div class="price">₹{{ p.price }}</div>
+                </a>
+              }
+            </div>
           }
+
         </div>
       }
+
+      <!-- Typing Indicator -->
+      @if (isTyping()) {
+        <div class="typing">Amazing Assistant is typing...</div>
+      }
+
+      <!-- Recording Indicator -->
+      @if (isRecording()) {
+        <div class="recording-indicator">🎤 Listening...</div>
+      }
+
     </div>
-  }
 
-  @if (isTyping()) {
-    <div class="typing">Amazing Assistant is typing...</div>
-  }
-</div>
-
-
+    <!-- Footer -->
     <div class="chat-footer">
-      <input
-        [value]="userInput()"
+
+      <!-- Mic Button (Press & Hold) -->
+      <button 
+        type="button"
+        class="mic-btn"
+        (mousedown)="startRecording()"
+        (mouseup)="stopRecording()"
+        (mouseleave)="stopRecording()">
+        🎤
+      </button>
+
+      <!-- Text Input -->
+      <input 
+        [value]="userInput()" 
         (input)="onInput($event)"
         (keyup.enter)="sendMessage()"
-        placeholder="Type your message..."
+        placeholder="Type your message..." 
       />
 
-      <button (click)="sendMessage()">➤</button>
+      <!-- ➤ Send Message Button -->
+      <button
+        type="button"
+        class="send-btn"
+        (click)="sendMessage()">
+        ➤
+      </button>
+
+      <!-- Play TTS -->
+      <button
+        type="button"
+        class="speaker-btn"
+        (click)="playLastBotMessage()">
+        🔊
+      </button>
+
     </div>
+
   </div>
 }
