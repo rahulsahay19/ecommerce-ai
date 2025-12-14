@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ChatResponse } from "../models/ChatResponse";
+
+import { ChatAskResponse } from "../models/ChatAskResponse";
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -14,12 +15,17 @@ export class ChatService {
   // ---------------------------------------------------
   // TEXT → CHATBOT  (LLM Response + Products)
   // ---------------------------------------------------
-  ask(message: string): Observable<ChatResponse> {
-    return this.http.post<ChatResponse>(
-      `${this.baseUrl}/chat/ask`,
-      { message }
-    );
-  }
+ ask(message: string, conversationId?: string): Observable<ChatAskResponse> {
+  return this.http.post<ChatAskResponse>(
+    `${this.baseUrl}/chat/ask/context`,
+    {
+      userQuery: message,
+      conversationId
+    }
+  );
+}
+
+
 
   // ---------------------------------------------------
   // AUDIO → SPEECH TO TEXT (Azure STT)

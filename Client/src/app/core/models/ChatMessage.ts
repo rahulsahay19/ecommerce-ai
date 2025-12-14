@@ -1,7 +1,7 @@
 import { Product } from "../../store/models/Product";
 
 export interface ChatMessage {
-    role: 'user' | 'assisteant' | 'bot';
+    role: 'user' | 'assistant' | 'bot';
     content: string;
     products?: Product[];
 }

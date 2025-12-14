@@ -27,6 +27,7 @@ dataSourceBuilder.UseVector();
 var dataSource = dataSourceBuilder.Build();
 builder.Services.AddSingleton(dataSource);
 builder.Services.AddSingleton<IPgVectorRepository, PgVectorRepository>();
+builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
 
 //Embedding + Chat Provider
 var provider = cfg["EmbeddingProvider"]?.ToLowerInvariant() ?? "Ollama";

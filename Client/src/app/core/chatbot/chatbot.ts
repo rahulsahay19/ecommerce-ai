@@ -21,6 +21,8 @@ export class ChatBotComponent {
     isRecording = signal(false);
     userInput = signal('');
     messages = signal<ChatMessage[]>([]);
+    conversationId = signal<string | null>(null);
+
 
     // Audio Recording
     private audioContext?: AudioContext;
@@ -62,9 +64,12 @@ export class ChatBotComponent {
         this.userInput.set('');
         this.isTyping.set(true);
 
-        this.chatService.ask(text).subscribe({
+        this.chatService.ask(text, this.conversationId() ?? undefined).subscribe({
+
             next: (res) => {
-                this.addBotMessage(res.answer, res.products);
+                 // persist conversationId
+                this.conversationId.set(res.conversationId);
+                this.addBotMessage(res.response.answer, res.response.products);
                 this.isTyping.set(false);
             },
             error: () => {
@@ -221,9 +226,10 @@ export class ChatBotComponent {
 
                 this.messages.update(m => [...m, { role: "user", content: text }]);
 
-                this.chatService.ask(text).subscribe({
+                this.chatService.ask(text, this.conversationId() ?? undefined).subscribe({
                     next: (chatRes) => {
-                        this.addBotMessage(chatRes.answer, chatRes.products);
+                        this.conversationId.set(chatRes.conversationId);
+                        this.addBotMessage(chatRes.response.answer, chatRes.response.products);
                         this.isTyping.set(false);
                     }
                 });

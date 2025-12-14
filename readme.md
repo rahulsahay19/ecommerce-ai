@@ -162,6 +162,37 @@ Client Side
 
 ![Image](https://github.com/user-attachments/assets/4dff511e-5095-4657-b5f3-2233071a802f)
 
+AI Conversations SQL
+
+Login to Postgres container
+
+```bash
+docker exec -it pgvector psql -U aiuser -d aivector
+```
+
+```sql
+-- Step 1: Conversations
+CREATE TABLE IF NOT EXISTS ai_conversations (
+    id uuid PRIMARY KEY,
+    created_on timestamptz NOT NULL DEFAULT now(),
+    last_updated_on timestamptz NOT NULL DEFAULT now()
+);
+
+-- Step 2: Messages
+CREATE TABLE IF NOT EXISTS ai_conversation_messages (
+    id bigserial PRIMARY KEY,
+    conversation_id uuid NOT NULL
+        REFERENCES ai_conversations(id) ON DELETE CASCADE,
+    role text NOT NULL,
+    content text NOT NULL,
+    created_on timestamptz NOT NULL DEFAULT now()
+);
+
+-- Step 3: Indexes (performance layer)
+CREATE INDEX IF NOT EXISTS ix_ai_conv_msg_conv_created
+ON ai_conversation_messages (conversation_id, created_on);
+```
+
 🚀 What’s Next – Phase 2 Preview
 Phase 2: Intelligent Assistant & Web Integration 🔮
 

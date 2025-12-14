@@ -76,7 +76,7 @@
 
                 return new ChatResponse(
                     Answer: answer,
-                    Products: results,   // ✅ already IEnumerable<Product>
+                    Products: results,   // already IEnumerable<Product>
                     Sources: new List<SourceResult>
                     {
             new SourceResult("db", "Results fetched from product database")
