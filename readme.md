@@ -5,7 +5,7 @@
 
 ## 🌟 Overview  
 
-Welcome to **Phase 1** of the *AI-Enabled E-Commerce Project* — a hands-on journey where we blend **.NET Microservices**, **Angular**, **PostgreSQL (pgvector)**, and **AI models** like **Azure OpenAI** & **Ollama** to build an intelligent, conversational shopping experience.  
+Welcome to the *AI-Enabled E-Commerce Project* — a hands-on journey where we blend **.NET Microservices**, **Angular**, **PostgreSQL (pgvector)**, and **AI models** like **Azure OpenAI** & **Ollama** to build an intelligent, conversational shopping experience.  
 
 Here, your application evolves from a plain catalog into a **smart, chat-driven store** that understands human language, performs semantic search, and responds conversationally — just like modern AI shopping assistants.
 
@@ -30,6 +30,10 @@ You’ll learn to orchestrate the complete AI search lifecycle:
 
 ![Image](https://github.com/user-attachments/assets/d6696459-9948-45f4-a0ff-0ce9f404206e) 
 
+## 2nd Phase
+
+![Image](https://github.com/user-attachments/assets/568efe89-733d-40f4-9ea1-0c2b9c48d62b)
+
 ### 🧠 Key Components Explained  
 
 | Layer | Description |
@@ -43,16 +47,20 @@ You’ll learn to orchestrate the complete AI search lifecycle:
 
 ---
 
-## 🛠️ Tech Stack  
+## 🧠 Key Components Explained (Phase 1 + Phase 2)
 
-| Category | Technology |
-|-----------|-------------|
-| **Frontend** | Angular 20 + Signals, TypeScript, SCSS |
-| **Backend** | .NET 9 Microservices (CQRS style) |
-| **Database** | PostgreSQL + pgvector extension |
-| **AI Models** | Ollama (Local LLM), Azure OpenAI (Cloud GPT-4 family) |
-| **Integration** | REST APIs (`/chat`, `/semantic/search`) |
-| **Deployment Ready** | Docker Compose + Swagger + Azure App Services |
+| Layer                           | Description                                                                                                                                                                                                              |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 🧍‍♂️ **Angular Chat UI**       | Chat-style interface where users can search, ask, and explore products naturally using text or voice.                                                                                                                    |
+| 💬 **Angular Frontend**         | Bridges the UI and backend using REST APIs like `/chat/ask`, `/chat/ask/context`, `/semantic/search`, `/voice/stt`, and `/voice/tts`. Manages conversation state (conversationId) on the client.                         |
+| ⚙️ **.NET Microservices**       | Core AI orchestration layer handling intent detection, keyword + semantic + hybrid search, contextual follow-ups, and response composition. Acts as the “AI brain,” not just a proxy to LLMs.                            |
+| 🗄️ **PostgreSQL + pgvector**   | Vector database storing product embeddings and metadata. Also stores **conversation history** (messages, roles, timestamps) to enable backend-driven contextual memory.                                                  |
+| 🧠 **Embedding Provider**       | Converts human text into vectors using **Ollama (768-dim)** for local inference or **Azure OpenAI (1536-dim)** for cloud-scale accuracy.                                                                                 |
+| 💬 **Chat Service**             | Combines retrieved product data, conversation context, and LLM reasoning to generate grounded, conversational answers (RAG).                                                                                             |
+| 🎙️ **Speech-to-Text (STT)**    | Converts user voice input into text using Azure Speech or compatible STT engines, enabling hands-free conversational queries.                                                                                            |
+| 🔊 **Text-to-Speech (TTS)**     | Converts AI responses back into natural-sounding audio, allowing the assistant to “speak” answers like a real voice assistant.                                                                                           |
+| 🧠 **Contextual Memory Engine** | Persists and retrieves recent conversation turns, detects follow-up queries, and anchors vague questions (e.g. “Which is costliest?”) to the correct prior topic — implemented at the **system level**, not via prompts. |
+
 
 ---
 
