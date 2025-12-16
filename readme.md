@@ -201,19 +201,6 @@ CREATE INDEX IF NOT EXISTS ix_ai_conv_msg_conv_created
 ON ai_conversation_messages (conversation_id, created_on);
 ```
 
-🚀 What’s Next – Phase 2 Preview
-Phase 2: Intelligent Assistant & Web Integration 🔮
-
-In the next phase, we’ll take this foundation further with:
-
-🎙️ Voice Assistant integration (Speech ↔ Text ↔ Speech)
-
-🌐 Web Search fallback (using Bing / Google API)
-
-🧠 Contextual memory and personalized recommendations
-
-💬 Multi-turn conversational flows and smart ranking
-
 Stay tuned — the goal is to make your app behave like a real AI shopping assistant!
 
 MIT License
